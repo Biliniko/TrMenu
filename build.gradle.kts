@@ -78,6 +78,7 @@ subprojects {
     }
 
     repositories {
+        mavenLocal()
         // 国内防屏蔽服务器
         maven("https://repo.aeoliancloud.com/repository/releases") { isAllowInsecureProtocol = true }
         mavenCentral()
