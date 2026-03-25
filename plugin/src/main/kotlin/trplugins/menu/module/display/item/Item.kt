@@ -96,6 +96,16 @@ open class Item(
             if (meta.hasAmount()) this.amount = meta.amount(session)
         }
 
+        // Some hybrid server stacks rebuild item meta without preserving the
+        // configured display name, so restore it when it is unexpectedly blank.
+        if (name != null) {
+            val itemMeta = itemStack.itemMeta
+            if (itemMeta != null && (!itemMeta.hasDisplayName() || itemMeta.displayName.isBlank())) {
+                itemMeta.setDisplayName(name)
+                itemStack.itemMeta = itemMeta
+            }
+        }
+
         meta.nbt(session, itemStack)?.run {
             itemStack.itemMeta = this
         }
